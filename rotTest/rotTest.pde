@@ -110,10 +110,30 @@ void newSphere(int siz,float[] pos,int r, int g, int b){
 }
 
 void keyPressed(){
+  print(z);
   if(keyCode == 'V'){
 
     float[] curMousePos = new float[]{mouseX-width/2,mouseY-height/2, z};
     float[] realPos = matrix.combinedRot(curMousePos,-alpha,-theta);
     verticies.add(realPos);
+  } else if(keyCode == 'Z'){
+    if(z == -10){
+      z *=-1;
+    }else if(z < -10){
+      z/=2;
+    } else {
+      z*=2;
+    }
+  } else if(keyCode == 'X'){
+    if(z == 10){
+      z *=-1;
+    }else if(z > 10){
+      z/=2;
+    } else {
+      z*=2;
+    }
+    
   }
+
+
 }
