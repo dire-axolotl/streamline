@@ -11,11 +11,25 @@ float initialY;
 int run;
 float z;
 ArrayList<float[]> verticies;
+int sideAVertNum;
+float[][] sideA;
+int sideBVertNum;
+float[][] sideB;
+boolean mode;
+color sideACol;
+color sideBCol;
 
 void setup(){
   size(1000,1000,P3D);
   z = 10;
   verticies = new ArrayList<float[]>();
+  sideAVertNum = 4;
+  sideA = new float[4][];
+  sideBVertNum = 4;
+  sideB = new float[4][];
+  mode = true;
+  sideACol = color(0,255,0);
+  sideBCol = color(255,0,0);
   
 }
 
@@ -41,9 +55,17 @@ void mouseReleased(){
 
 void draw(){
   background(255);
+  //rotation text
   textSize(100);
   fill(0);
-  text("Xrot:"+alpha +" Yrot:"+theta, 110,110);
+  text("Xrot:"+theta +" Yrot:"+alpha, 220,100);
+
+  //shape maker text
+  textSize(50);
+  fill(sideACol);
+  text("sideA:"+sideAVertNum, 45,65);
+  fill(sideBCol);
+  text("sideB:"+sideBVertNum, 45,110);
   newSphere(10,new float[]{mouseX,mouseY,z},125,255,125);
 
   pushMatrix();
@@ -52,6 +74,14 @@ void draw(){
   rotateY((float) Math.toRadians(theta));
   for(int i=0; i<verticies.size(); i++){
     newSphere(10,verticies.get(i),0,0,0);
+  }
+  noFill();
+  for(int tri =0;tri<verticies.size()-2;tri++){
+  beginShape();
+  for(int i=0; i<3; i++){
+    vertex(verticies.get(i+tri)[0],verticies.get(i+tri)[1],verticies.get(i+tri)[2]);
+  }
+  endShape(CLOSE);
   }
   popMatrix();
   // pushMatrix();
@@ -116,7 +146,21 @@ void keyPressed(){
     float[] curMousePos = new float[]{mouseX-width/2,mouseY-height/2, z};
     float[] realPos = matrix.combinedRot(curMousePos,-alpha,-theta);
     verticies.add(realPos);
-  } else if(keyCode == 'Z'){
+    if(mode){
+      if(verticies.size() >= sideAVertNum){
+        for(int i =0; i< sideAVertNum; i++){
+          sideA[i] = verticies.remove(i);
+        }
+      }
+    } else {
+      if(verticies.size() >= sideBVertNum){
+        for(int i =0; i< sideBVertNum; i++){
+          sideB[i] = verticies.remove(i);
+        }
+      }
+    }
+  } else if(keyCode == 'F'){
+    //forward and reverse;
     if(z == -10){
       z *=-1;
     }else if(z < -10){
@@ -124,7 +168,7 @@ void keyPressed(){
     } else {
       z*=2;
     }
-  } else if(keyCode == 'X'){
+  } else if(keyCode == 'R'){
     if(z == 10){
       z *=-1;
     }else if(z > 10){
@@ -132,7 +176,25 @@ void keyPressed(){
     } else {
       z*=2;
     }
-    
+  }else if(keyCode == 'Y'){
+    theta = 0;
+    oldTheta = 0;
+  }else if(keyCode == 'X'){
+    alpha = 0;
+    oldAlpha = 0;
+  } else if(keyCode == 'A'){
+    mode = !mode;
+    color temp = sideACol;
+    sideACol = sideBCol;
+    sideBCol = temp;
+  } else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'){
+    if(mode){
+      sideAVertNum = (int) keyCode - 48;
+      sideA = new float[(int) keyCode - 48][];
+    } else {
+      sideBVertNum = (int) keyCode - 48;
+      sideB = new float[(int) keyCode - 48][];
+    }
   }
 
 
