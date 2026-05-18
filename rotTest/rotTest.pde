@@ -16,6 +16,8 @@ float[][] sideA;
 int sideBVertNum;
 float[][] sideB;
 boolean mode;
+boolean completedSide;
+ArrayList<shape> shapes;
 color sideACol;
 color sideBCol;
 
@@ -28,8 +30,11 @@ void setup(){
   sideBVertNum = 4;
   sideB = new float[4][];
   mode = true;
+  completedSide = true;
   sideACol = color(0,255,0);
   sideBCol = color(255,0,0);
+
+  shapes = new ArrayList<shape>();
   
 }
 
@@ -83,46 +88,12 @@ void draw(){
   }
   endShape(CLOSE);
   }
+    for(shape s:shapes){
+    s.drawSides();
+    s.combine();
+  }
   popMatrix();
-  // pushMatrix();
-  // translate(200,200);
-  // rotateX((float) Math.toRadians(alpha));
-  // rotateY((float) Math.toRadians(theta));
-  // translate(100,0);
-  // fill(100,100);
-  // box(100f,100f,100f);
-  // popMatrix();
-  // pushMatrix();
-  // globalAlpha+=.5;
-  // globalTheta+=.5;
-  // translate(mouseX,mouseY);
-  
-  // rotateX((float) Math.toRadians(alpha));
-  // rotateY((float) Math.toRadians(theta));
-  // // rotateY((float) Math.toRadians(-theta));
-  // // rotateX((float) Math.toRadians(-alpha));
-  // // rotateY((float) Math.toRadians(-theta));
-  // // rotateX((float) Math.toRadians(-alpha));
-  // float[] pos = new float[]{0,0,100};
-  // newSphere(10,pos,255,0,125);
-  // float[] xRotated = matrix.vectorRot3dX(pos,globalAlpha);
-  // // matrix.vectorPrint(xRotated);
-  // newSphere(10,xRotated,125,255,0);
-  // float[] yRotated = matrix.vectorRot3dY(pos,globalTheta);
-  // matrix.vectorPrint(yRotated);
-  // newSphere(10,yRotated,0,125,255);
-  // float[] combined = matrix.vectorRot3dY(xRotated,globalTheta);
-  // matrix.vectorPrint(combined);
-  // newSphere(10,combined,255,255,255);
-  // float[] unchangedY = matrix.vectorRot3dX(pos,-alpha);
-  // float[] unchanged = matrix.vectorRot3dY(unchangedY,-theta);
-  // System.out.println("unchaged");
-  // matrix.vectorPrint(unchanged);
-  // System.out.println("unchaged");
 
-  // newSphere(10,unchanged,255,255,0);
-
-  // popMatrix();
 
   
 
@@ -146,19 +117,33 @@ void keyPressed(){
     float[] curMousePos = new float[]{mouseX-width/2,mouseY-height/2, z};
     float[] realPos = matrix.combinedRot(curMousePos,-alpha,-theta);
     verticies.add(realPos);
+    boolean ran = false;
     if(mode){
       if(verticies.size() >= sideAVertNum){
-        for(int i =0; i< sideAVertNum; i++){
+        for(int i =sideAVertNum-1; i>=0; i--){
+          println("i:" + i + " " + verticies);
           sideA[i] = verticies.remove(i);
         }
+        ran = true;
+        completedSide = !completedSide;
+        modeSwap();
       }
     } else {
       if(verticies.size() >= sideBVertNum){
-        for(int i =0; i< sideBVertNum; i++){
+        for(int i =sideBVertNum-1; i>=0 ; i--){
           sideB[i] = verticies.remove(i);
         }
+        ran = true;
+        completedSide = !completedSide;
+        modeSwap();
       }
     }
+    if(completedSide && ran){
+      shapes.add(new shape(new float[][][]{sideA,sideB}));
+      sideA = new float[sideAVertNum][];
+      sideB = new float[sideBVertNum][];
+    }
+    
   } else if(keyCode == 'F'){
     //forward and reverse;
     if(z == -10){
@@ -183,11 +168,8 @@ void keyPressed(){
     alpha = 0;
     oldAlpha = 0;
   } else if(keyCode == 'A'){
-    mode = !mode;
-    color temp = sideACol;
-    sideACol = sideBCol;
-    sideBCol = temp;
-  } else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'){
+    modeSwap();
+  } else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'||keyCode == '5'||keyCode == '5'||keyCode == '6'||keyCode == '7'||keyCode == '8'||keyCode == '9'){
     if(mode){
       sideAVertNum = (int) keyCode - 48;
       sideA = new float[(int) keyCode - 48][];
@@ -198,4 +180,11 @@ void keyPressed(){
   }
 
 
+}
+
+void modeSwap(){
+  mode = !mode;
+  color temp = sideACol;
+  sideACol = sideBCol;
+  sideBCol = temp;
 }
