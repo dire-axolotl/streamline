@@ -62,12 +62,44 @@ public class shape {
     }
   }
 
+    public void sidesPyr(){
+    if(sides[0].length == 1){
+      for(int i = 0; i < sides[1].length; i++){
+        fill(color(0,255,0));
+        beginShape();
+        vertex(sides[0][0][0],sides[0][0][1],sides[0][0][2]);
+        vertex(sides[1][i][0],sides[1][i][1],sides[1][i][2]);
+        if(i == sides[1].length-1){
+          vertex(sides[1][0][0],sides[1][0][1],sides[1][0][2]);
+          i = sides[1].length;
+        }else{
+          vertex(sides[1][i+1][0],sides[1][i+1][1],sides[1][i+1][2]);
+        }
+        endShape(CLOSE);
+      }
+    } else {
+      for(int i = 0; i < sides[0].length; i++){
+        fill(color(0,255,0));
+        beginShape();
+        vertex(sides[1][0][0],sides[1][0][1],sides[1][0][2]);
+        vertex(sides[0][i][0],sides[0][i][1],sides[0][i][2]);
+        if(i == sides[0].length-1){
+          vertex(sides[0][0][0],sides[0][0][1],sides[0][0][2]);
+          i = sides[0].length;
+        }else{
+          vertex(sides[0][i+1][0],sides[0][i+1][1],sides[0][i+1][2]);
+        }
+        endShape(CLOSE);
+      }
+    }
+  }
+
   public void combine(){
     if(sides.length >= 2){
       if(sides[0].length == sides[1].length){
         sidesRect();
       } else {
-        connectPyr();
+        sidesPyr();
       }
     }
   }
