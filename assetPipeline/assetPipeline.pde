@@ -6,6 +6,8 @@ float oldTheta;
 float oldAlpha;
 float theta;
 float alpha;
+float oldZShift;
+float zShift;
 float initialX;
 float initialY;
 int run;
@@ -15,9 +17,11 @@ int sideAVertNum;
 float[][] sideA;
 int sideBVertNum;
 float[][] sideB;
+color[][] allColors;
 boolean mode;
 boolean completedSide;
 ArrayList<shape> shapes;
+int colorIndex = 0;
 color sideACol;
 color sideBCol;
 
@@ -35,6 +39,8 @@ void setup(){
   sideBCol = color(255,0,0);
 
   shapes = new ArrayList<shape>();
+  zShift = 0;
+  oldZShift = zShift;
   
 }
 
@@ -64,6 +70,8 @@ void draw(){
   textSize(100);
   fill(0);
   text("Xrot:"+theta +" Yrot:"+alpha, 220,100);
+  textSize(20);
+  text("z:"+zShift, 800,170);
 
   //shape maker text
   textSize(50);
@@ -77,6 +85,7 @@ void draw(){
   translate(width/2,height/2);
   rotateX((float) Math.toRadians(alpha));
   rotateY((float) Math.toRadians(theta));
+  rotateZ((float) Math.toRadians(zShift));
   for(int i=0; i<verticies.size(); i++){
     newSphere(10,verticies.get(i),0,0,0);
   }
@@ -139,7 +148,10 @@ void keyPressed(){
       }
     }
     if(completedSide && ran){
-      shapes.add(new shape(new float[][][]{sideA,sideB}));
+      // = new color[]{color(0),color(0),color(0),color(0),color(0),color(0)}
+      
+      shapes.add(new shape(new float[][][]{sideA,sideB},allColors[colorIndex]));
+      colorIndex++;
       sideA = new float[sideAVertNum][];
       sideB = new float[sideBVertNum][];
     }
@@ -167,8 +179,18 @@ void keyPressed(){
   }else if(keyCode == 'X'){
     alpha = 0;
     oldAlpha = 0;
-  } else if(keyCode == 'A'){
+  } else if(keyCode == 'Z'){
+    zShift = 0;
+    oldZShift = 0;
+  }else if(keyCode == 'Q'){
+    zShift += 10;
+  }else if(keyCode == 'E'){
+    zShift -= 10;
+  }else if(keyCode == 'A'){
     modeSwap();
+  } else if(keyCode == 'P'){
+    int[][] rgb = new int[allColors.length][3];
+  
   } else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'||keyCode == '5'||keyCode == '5'||keyCode == '6'||keyCode == '7'||keyCode == '8'||keyCode == '9'){
     if(mode){
       sideAVertNum = (int) keyCode - 48;
