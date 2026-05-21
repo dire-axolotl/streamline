@@ -27,8 +27,11 @@ int colorIndex = 0;
 color sideACol;
 color sideBCol;
 color currentColor;
+boolean palletOn;
+int b = 0;
 
 void setup(){
+  palletOn = false;
   newColors = new color[13];
   size(1000,1000,P3D);
   z = 10;
@@ -70,6 +73,9 @@ void mouseReleased(){
 }
 
 void draw(){
+  if(palletOn){
+
+  } else {
   background(255);
   //rotation text
   textSize(100);
@@ -107,6 +113,8 @@ void draw(){
     s.combine();
   }
   popMatrix();
+}
+
 
 
   
@@ -196,13 +204,26 @@ void keyPressed(){
   } else if(keyCode == 'P'){
     //open pallet
     // int[][] rgb = new int[allColors.length][3];
+    palletOn = !palletOn;
+    drawPallet(b);
   
   }else if(keyCode == 'O'){
-    // newcolor[2] += currentColor;
-    // newColorIndex++;
-    
-  
-  } else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'||keyCode == '5'||keyCode == '5'||keyCode == '6'||keyCode == '7'||keyCode == '8'||keyCode == '9'){
+    if(mouseX > 0 && mouseX < 510 && mouseY > 0 && mouseY < 510){
+      currentColor = color(mouseX/2,mouseY/2,b);
+      newColors[newColorIndex] = currentColor;
+      newColorIndex++;
+    }
+  }else if(keyCode == 'K'){
+    if(b<255){
+      b+=25;
+    }
+    drawPallet(b);
+  }else if(keyCode == 'L'){
+    if(b > 0){
+    b -= 25;
+    }
+    drawPallet(b);
+  }  else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'||keyCode == '5'||keyCode == '5'||keyCode == '6'||keyCode == '7'||keyCode == '8'||keyCode == '9'){
     if(mode){
       sideAVertNum = (int) keyCode - 48;
       sideA = new float[(int) keyCode - 48][];
@@ -220,4 +241,13 @@ void modeSwap(){
   color temp = sideACol;
   sideACol = sideBCol;
   sideBCol = temp;
+}
+
+void drawPallet(int b){
+  for(int r = 0; r<255; r++){
+    for(int g = 0; g<255; g++){
+      fill(color(r,g,b));
+      rect(r*2,g*2,2,2);
+    }
+  }
 }
