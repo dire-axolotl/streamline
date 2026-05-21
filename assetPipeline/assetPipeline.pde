@@ -32,7 +32,6 @@ int b = 0;
 
 void setup(){
   palletOn = false;
-  newColors = new color[13];
   size(1000,1000,P3D);
   z = 10;
   verticies = new ArrayList<float[]>();
@@ -49,7 +48,8 @@ void setup(){
   zShift = 0;
   oldZShift = zShift;
   colorMatrix = new ArrayList<color[]>();
-  colorMatrix.add( new color[]{color(0,0,0),color(255,255,255),color(255,0,0),color(0,255,0),color(0,0,255),color(100,100,100)});
+  colorMatrix.add(new color[11]);
+  newColors = colorMatrix.get(0);
 }
 
 
@@ -133,7 +133,6 @@ void newSphere(int siz,float[] pos,int r, int g, int b){
 }
 
 void keyPressed(){
-  print(z);
   if(keyCode == 'V'){
 
     float[] curMousePos = new float[]{mouseX-width/2,mouseY-height/2, z};
@@ -143,7 +142,6 @@ void keyPressed(){
     if(mode){
       if(verticies.size() >= sideAVertNum){
         for(int i =sideAVertNum-1; i>=0; i--){
-          println("i:" + i + " " + verticies);
           sideA[i] = verticies.remove(i);
         }
         ran = true;
@@ -163,8 +161,7 @@ void keyPressed(){
     if(completedSide && ran){
       // = new color[]{color(0),color(0),color(0),color(0),color(0),color(0)}
       
-      shapes.add(new shape(new float[][][]{sideA,sideB},colorMatrix.get(0)));
-      colorIndex++;
+      shapes.add(new shape(new float[][][]{sideA,sideB},colorMatrix.get(colorIndex)));
       sideA = new float[sideAVertNum][];
       sideB = new float[sideBVertNum][];
     }
@@ -207,10 +204,36 @@ void keyPressed(){
     palletOn = !palletOn;
     drawPallet(b);
   
+  }else if(keyCode == 'T'){
+    print(colorMatrix.size());
+    if(colorIndex < colorMatrix.size()-1){
+      colorIndex++;
+      drawPallet(b);
+    }
+  }else if(keyCode == 'G'){
+    if(colorIndex != 0){
+      colorIndex--;
+      drawPallet(b);
+    }
+  }else if(keyCode == 'U'){
+    newColors = new color[11];
+    colorMatrix.add(newColors);
+    colorIndex++;
+    newColorIndex = 0;
+    drawPallet(b);
+  }else if(keyCode == 'I'){
+    if(newColorIndex != 0){
+      newColorIndex--;
+    }
+    newColors[newColorIndex] = color(255,255,255);
+
+    drawPallet(b);
   }else if(keyCode == 'O'){
     if(mouseX > 0 && mouseX < 510 && mouseY > 0 && mouseY < 510){
       currentColor = color(mouseX/2,mouseY/2,b);
       newColors[newColorIndex] = currentColor;
+      colorMatrix.set(colorIndex,newColors);
+      drawPallet(b);
       newColorIndex++;
     }
   }else if(keyCode == 'K'){
@@ -249,5 +272,10 @@ void drawPallet(int b){
       fill(color(r,g,b));
       rect(r*2,g*2,2,2);
     }
+  }
+  for(int i =0; i<colorMatrix.get(colorIndex).length; i++){
+      // print(colorIndex);
+      fill(colorMatrix.get(colorIndex)[i]);
+      rect(800,75*i,75,75);
   }
 }
