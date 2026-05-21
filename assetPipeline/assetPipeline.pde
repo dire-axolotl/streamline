@@ -17,15 +17,19 @@ int sideAVertNum;
 float[][] sideA;
 int sideBVertNum;
 float[][] sideB;
-color[][] allColors;
+ArrayList<color[]> colorMatrix;
+color[] newColors;
 boolean mode;
 boolean completedSide;
 ArrayList<shape> shapes;
+int newColorIndex = 0;
 int colorIndex = 0;
 color sideACol;
 color sideBCol;
+color currentColor;
 
 void setup(){
+  newColors = new color[13];
   size(1000,1000,P3D);
   z = 10;
   verticies = new ArrayList<float[]>();
@@ -41,7 +45,8 @@ void setup(){
   shapes = new ArrayList<shape>();
   zShift = 0;
   oldZShift = zShift;
-  
+  colorMatrix = new ArrayList<color[]>();
+  colorMatrix.add( new color[]{color(0,0,0),color(255,255,255),color(255,0,0),color(0,255,0),color(0,0,255),color(100,100,100)});
 }
 
 
@@ -150,7 +155,7 @@ void keyPressed(){
     if(completedSide && ran){
       // = new color[]{color(0),color(0),color(0),color(0),color(0),color(0)}
       
-      shapes.add(new shape(new float[][][]{sideA,sideB},allColors[colorIndex]));
+      shapes.add(new shape(new float[][][]{sideA,sideB},colorMatrix.get(0)));
       colorIndex++;
       sideA = new float[sideAVertNum][];
       sideB = new float[sideBVertNum][];
@@ -189,7 +194,13 @@ void keyPressed(){
   }else if(keyCode == 'A'){
     modeSwap();
   } else if(keyCode == 'P'){
-    int[][] rgb = new int[allColors.length][3];
+    //open pallet
+    // int[][] rgb = new int[allColors.length][3];
+  
+  }else if(keyCode == 'O'){
+    // newcolor[2] += currentColor;
+    // newColorIndex++;
+    
   
   } else if(keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4'||keyCode == '5'||keyCode == '5'||keyCode == '6'||keyCode == '7'||keyCode == '8'||keyCode == '9'){
     if(mode){
