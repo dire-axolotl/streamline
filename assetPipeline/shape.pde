@@ -99,6 +99,16 @@ public class shape {
     }
   }
 
+  public int[][] colorToRGBInt(){
+    int[][] rgbs = new int[colors.length][3];
+    int i = 0;
+    for(color col:colors){
+      rgbs[i] = new int[]{(int) red(col),(int) green(col),(int) blue(col)};
+      i++;
+    }  
+    return rgbs;
+  }
+
   public void combine(){
     if(sides.length >= 2){
       if(sides[0].length == sides[1].length){

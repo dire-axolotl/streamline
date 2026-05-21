@@ -160,7 +160,6 @@ void keyPressed(){
     }
     if(completedSide && ran){
       // = new color[]{color(0),color(0),color(0),color(0),color(0),color(0)}
-      
       shapes.add(new shape(new float[][][]{sideA,sideB},colorMatrix.get(colorIndex)));
       sideA = new float[sideAVertNum][];
       sideB = new float[sideBVertNum][];
@@ -197,7 +196,21 @@ void keyPressed(){
   }else if(keyCode == 'E'){
     zShift -= 10;
   }else if(keyCode == 'A'){
-    modeSwap();
+    if(completedSide){
+      modeSwap();
+    }
+  }else if(keyCode == 'H'){
+    float[][][][] floatForm= new float[shapes.size()][][][];
+    int[][][] colorRgb = new int[shapes.size()][][];
+    int i = 0;
+    for(shape s:shapes){
+      floatForm[i] = s.sides;
+      colorRgb[i] =  s.colorToRGBInt();
+      i++;
+    }
+    export.exportShapes(floatForm,colorRgb);
+
+    // export();
   } else if(keyCode == 'P'){
     //open pallet
     // int[][] rgb = new int[allColors.length][3];
@@ -229,6 +242,7 @@ void keyPressed(){
 
     drawPallet(b);
   }else if(keyCode == 'O'){
+    if(newColorIndex != 10){
     if(mouseX > 0 && mouseX < 510 && mouseY > 0 && mouseY < 510){
       currentColor = color(mouseX/2,mouseY/2,b);
       newColors[newColorIndex] = currentColor;
@@ -236,6 +250,7 @@ void keyPressed(){
       drawPallet(b);
       newColorIndex++;
     }
+  } 
   }else if(keyCode == 'K'){
     if(b<255){
       b+=25;
