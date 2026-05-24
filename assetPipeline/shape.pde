@@ -7,6 +7,8 @@ public class shape {
     //colors are sorted front,back,top,right,bottom,left(clockwise from top)
     this.colors = colors;
   }
+  public shape(){
+  }
 
   public void drawSides(){
     int colorIndex = 0;
@@ -67,7 +69,7 @@ public class shape {
 
     public void sidesPyr(){
     if(sides[0].length == 1){
-      colorIndex = 1;
+      int colorIndex= 1;
       for(int i = 0; i < sides[1].length; i++){
         fill(colors[colorIndex]);
         colorIndex++;
@@ -118,7 +120,23 @@ public class shape {
       }
     }
   }
+  // can't be staic because pde doesn't ball like that
+  public shape[] importer(String fileName){
+    // try{
+    //   BufferedReader read = createReader(fileName);
+    //   while(true){
+    //     println(read.readLine());
+    //   }
 
-
+    //   return new shape[]{new shape()};
+    // }
+    // catch(Exception e){
+      
+    //   print(e);
+    // }
+    return new shape[]{new shape()};
+    
+    
+  }
   
 }

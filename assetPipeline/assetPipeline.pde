@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+String fileName;
+PrintWriter fileWrite;
 float globalAlpha;
 float globalTheta;
 float oldTheta;
@@ -30,7 +32,9 @@ color currentColor;
 boolean palletOn;
 int b = 0;
 
+
 void setup(){
+  fileWrite = createWriter("test.txt");
   palletOn = false;
   size(1000,1000,P3D);
   z = 10;
@@ -161,6 +165,8 @@ void keyPressed(){
     if(completedSide && ran){
       // = new color[]{color(0),color(0),color(0),color(0),color(0),color(0)}
       shapes.add(new shape(new float[][][]{sideA,sideB},colorMatrix.get(colorIndex)));
+      print(sideAVertNum);
+      print(sideBVertNum);
       sideA = new float[sideAVertNum][];
       sideB = new float[sideBVertNum][];
     }
@@ -208,8 +214,12 @@ void keyPressed(){
       colorRgb[i] =  s.colorToRGBInt();
       i++;
     }
-    export.exportShapes(floatForm,colorRgb);
 
+    String total = export.exportShapes(floatForm,colorRgb);
+    fileWrite.print(total);
+    fileWrite.flush();
+    fileWrite.close();
+    exit();
     // export();
   } else if(keyCode == 'P'){
     //open pallet

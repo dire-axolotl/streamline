@@ -1,6 +1,14 @@
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+
 
 public class export{
-  public static void exportShapes(float[][][][] shapes,int[][][] allRgbs){
+  public static String exportShapes(float[][][][] shapes,int[][][] allRgbs){
     String total = "";
     int shapeN = 0;
     for(float[][][] shape:shapes){
@@ -39,6 +47,41 @@ public class export{
       total += "\n";
     shapeN++;
   }
-  System.out.println(total);
+  return total;
   }
+
+//   public static shapeShell importer(String fileName){
+//     File fileR = new File(fileName);
+//     try{
+
+//       Scanner scan = new Scanner(fileR);
+//       ArrayList<String> shapesString = new ArrayList<String>();
+//       while(scan.hasNextLine()){
+//         shapesString.add(scan.nextLine());
+//       }
+//       scan.close();
+
+//       float[][][][] shapes = new float[shapesString.size()][][][];
+//       int[][][] colors = new int[shapesString.size()][][];
+//       System.out.println(shapesString.size());
+//       for (String string : shapesString) {
+
+//         System.out.println(string);
+//       }
+
+
+//       return new shapeShell(shapes,colors);
+
+
+//     }  
+//     catch(Exception e){
+//       System.err.println(e);
+//     }  
+    
+//     return new shapeShell();
+// }
+
+public static void main(String[] args) {
+  // importer("/assetPipeline/test.txt");
+}
 }
