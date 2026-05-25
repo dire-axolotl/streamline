@@ -7,7 +7,24 @@ public class shape {
     //colors are sorted front,back,top,right,bottom,left(clockwise from top)
     this.colors = colors;
   }
+
   public shape(){
+    //empty constructor for psuedo static methods
+  }
+  public shape(shape s){
+    float[][][] fullshape = new float[s.sides.length][][];
+    for(int si = 0; si<s.sides.length; si++){
+      float[][] newSides = new float[s.sides[si].length][3];
+      for(int v = 0; v<s.sides[si].length;v++){
+        for(int xyz = 0; xyz<s.sides[si][v].length;xyz++){
+          newSides[v][xyz] =  s.sides[si][v][xyz];
+        }
+      }
+      fullshape[si] = newSides;
+      
+    }
+    this.sides = fullshape;
+    this.colors = s.colors.clone();
   }
 
   public void drawSides(){
@@ -190,6 +207,16 @@ public class shape {
     return new shape[]{new shape()};
     
     
+  }
+
+  void shapeAdd(float[] xyz){
+    for(int si =0; si< sides.length;si++){
+      for(int ver = 0; ver<sides[si].length;ver++){
+        sides[si][ver][0] -= xyz[0];
+        sides[si][ver][1] -= xyz[1];
+        sides[si][ver][2] -= xyz[2];
+      }
+    }
   }
   
 }
