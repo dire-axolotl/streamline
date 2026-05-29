@@ -209,14 +209,31 @@ public class shape {
     
   }
 
-  void shapeAdd(float[] xyz){
+  void shapeAdd(float[] xyz, int scale){
     for(int si =0; si< sides.length;si++){
       for(int ver = 0; ver<sides[si].length;ver++){
-        sides[si][ver][0] -= xyz[0];
-        sides[si][ver][1] -= xyz[1];
-        sides[si][ver][2] -= xyz[2];
+        sides[si][ver][0] -= xyz[0]/scale;
+        sides[si][ver][1] -= xyz[1]/scale;
+        sides[si][ver][2] -= xyz[2]/scale;
       }
     }
+  }
+
+
+  float[][][] shapeDelta(shape s){
+    float[][][] delta = new float[sides.length][][];
+    for(int si = 0; si<sides.length; si++){
+      float[][] sideList = new float[sides[si].length][];
+      for(int vert = 0; vert<sides[si].length; vert++){
+        float[] vertList = new  float[3];
+        for(int xyz = 0; xyz<sides[si][vert].length; xyz++){
+          vertList[xyz] = sides[si][vert][xyz] - s.sides[si][vert][xyz];
+        }
+        sideList[vert] = vertList;
+      }
+      delta[si] = sideList;
+    }
+    return delta;
   }
   
 }

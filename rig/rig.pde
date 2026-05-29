@@ -6,6 +6,10 @@ int pageI;
 //page I determines the shape being moved
 int shapeI;
 shape[] shapes;
+PrintWriter fileWrite;
+String fileName = "awsome.txt";
+boolean spaceMode;
+boolean vertexMode;
 float oldTheta;
 float oldAlpha;
 float theta;
@@ -18,10 +22,12 @@ float z;
 int run;
 void setup(){
   size(1000,1000,P3D);
+  fileWrite = createWriter(fileName);
+  spaceMode = true;
   pageI = 0;
   pages = new ArrayList<shape[]>();
   shape n = new shape();
-  shapes = n.importer("test.txt");
+  shapes = n.importer("raymondHair.txt");
   pages.add(shapes);
   zShift = 0;
   oldZShift = zShift;
@@ -106,6 +112,13 @@ void keyPressed(){
     if(pageI<pages.size()-1){
       pageI++;
     }
+  }else if(keyCode == 'X') {
+    for(shape[] s:pages){
+      exportShape(s);
+    }
+    fileWrite.flush();
+    fileWrite.close();
+    exit();
   } else if(keyCode == DOWN) {
     if(pageI>0){
       pageI--;
@@ -126,11 +139,30 @@ void keyPressed(){
     moveShape(0,-100);
   }else if(keyCode == 'D') {
     moveShape(-100,0);
+  }else if(keyCode == 'M') {
+    spaceMode = !spaceMode;
   }
 }
 
 void moveShape(float xM,float yM){
   float[] xyz = new float[]{xM,yM,0};
   xyz = matrix.combinedRot(xyz,-alpha,-theta);
-  pages.get(pageI)[shapeI].shapeAdd(xyz);
+  pages.get(pageI)[shapeI].shapeAdd(xyz,1);
+}
+
+
+void exportShape(shape[] shapes){
+  float[][][][] floatForm= new float[shapes.length][][][];
+    int[][][] colorRgb = new int[shapes.length][][];
+    int i = 0;
+    for(shape s:shapes){
+      floatForm[i] = s.sides;
+      colorRgb[i] =  s.colorToRGBInt();
+      i++;
+    }
+
+    String total = export.exportShapes(floatForm,colorRgb);
+    total += "PAGE\n";
+    fileWrite.print(total);
+    // fileWrite.flush();
 }

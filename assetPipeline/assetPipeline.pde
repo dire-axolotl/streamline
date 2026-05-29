@@ -34,7 +34,7 @@ int b = 0;
 
 
 void setup(){
-  fileWrite = createWriter("test.txt");
+  fileWrite = createWriter("raymondHair.txt");
   palletOn = false;
   size(1000,1000,P3D);
   z = 10;
