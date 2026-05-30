@@ -118,6 +118,15 @@ public class shape {
     }
   }
 
+  public void shapeRot(float alpha,float theta){
+    for(int siI = 0; siI<this.sides.length;siI++){
+      for(int vertI = 0; vertI<this.sides[siI].length;vertI++){
+        sides[siI][vertI] = matrix.combinedRot(sides[siI][vertI],alpha,theta);
+      }
+    }
+    
+  }
+
   public int[][] colorToRGBInt(){
     int[][] rgbs = new int[colors.length][3];
     int i = 0;
@@ -215,6 +224,16 @@ public class shape {
         sides[si][ver][0] -= xyz[0]/scale;
         sides[si][ver][1] -= xyz[1]/scale;
         sides[si][ver][2] -= xyz[2]/scale;
+      }
+    }
+  }
+
+    void shapeAddReal(float[] xyz, int scale){
+    for(int si =0; si< sides.length;si++){
+      for(int ver = 0; ver<sides[si].length;ver++){
+        sides[si][ver][0] += xyz[0]/scale;
+        sides[si][ver][1] += xyz[1]/scale;
+        sides[si][ver][2] += xyz[2]/scale;
       }
     }
   }
