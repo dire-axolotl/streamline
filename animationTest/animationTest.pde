@@ -20,9 +20,9 @@ void setup(){
   size(1000,1000,P3D);
 
   // box(100,100,0);
-  fileName = "awsome.txt";
-  //remember timeData should be same length as pages or longer
-  timeData = new int[]{1,1,1,1};
+  fileName = "rollerAniWalking.txt";
+  //remember timeData should be same one less as pages or it will break
+  timeData = new int[]{1,1};
 
   ani =  advancedImporter(fileName,timeData);
   
@@ -40,7 +40,7 @@ void draw(){
   // box(10,10,10);
   // newSphere(100,new float[]{200,200,0},255,0,0);
   ani.drawShapes();
-  if(frames - frameRate < 0){
+  if(frameRate - frames < 0){
     timeIndex++;
     frames = 0;
     if(timeIndex == timeData.length){
