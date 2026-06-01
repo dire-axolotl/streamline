@@ -68,8 +68,9 @@ public class shape {
   }
 
     public void sidesPyr(){
+    int colorIndex= 1;
     if(sides[0].length == 1){
-      int colorIndex= 1;
+      
       for(int i = 0; i < sides[1].length; i++){
         fill(colors[colorIndex]);
         colorIndex++;
@@ -86,7 +87,8 @@ public class shape {
       }
     } else {
       for(int i = 0; i < sides[0].length; i++){
-        fill(color(0,255,0));
+        fill(colors[colorIndex]);
+        colorIndex++;
         beginShape();
         vertex(sides[1][0][0],sides[1][0][1],sides[1][0][2]);
         vertex(sides[0][i][0],sides[0][i][1],sides[0][i][2]);

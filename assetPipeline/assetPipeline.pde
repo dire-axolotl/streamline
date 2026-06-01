@@ -34,7 +34,7 @@ int b = 0;
 
 
 void setup(){
-  fileWrite = createWriter("rollerPallet.txt");
+  fileWrite = createWriter("attackPallet.txt");
   palletOn = false;
   size(1000,1000,P3D);
   z = 10;
@@ -188,6 +188,10 @@ void keyPressed(){
     } else {
       z*=2;
     }
+  }else if(keyCode == 'M'){
+    if(shapes.size()-1 != -1){
+      shapes.remove(shapes.size()-1);
+    }
   }else if(keyCode == 'Y'){
     theta = 0;
     oldTheta = 0;
@@ -205,7 +209,7 @@ void keyPressed(){
     if(completedSide){
       modeSwap();
     }
-  }else if(keyCode == 'H'){
+  }else if(keyCode == '.'){
     float[][][][] floatForm= new float[shapes.size()][][][];
     int[][][] colorRgb = new int[shapes.size()][][];
     int i = 0;

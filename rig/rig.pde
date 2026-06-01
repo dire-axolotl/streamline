@@ -9,7 +9,7 @@ float[] moveMatrix;
 int test = 0;
 shape[] shapes;
 PrintWriter fileWrite;
-String fileName = "rollerAniWalking.txt";
+String fileName = "dogAniWalking.txt";
 boolean spaceMode;
 boolean vertexMode;
 boolean rotMode;
@@ -45,7 +45,7 @@ void setup(){
   pageI = 0;
   pages = new ArrayList<shape[]>();
   shape n = new shape();
-  shapes = n.importer("rollerPallet.txt");
+  shapes = n.importer("dogPallet.txt");
   pages.add(shapes);
   zShift = 0;
   oldZShift = zShift;
@@ -167,7 +167,7 @@ void keyPressed(){
     if(pageI<pages.size()-1){
       pageI++;
     }
-  }else if(keyCode == 'X') {
+  }else if(keyCode == '.') {
     for(shape[] s:pages){
       exportShape(s);
     }
@@ -186,8 +186,16 @@ void keyPressed(){
     if(shapeI>0){
       shapeI--;
     }
+  }else if(keyCode == 'X') {
+    theta = 0;
+    oldTheta = 0;
+  }else if(keyCode == 'Y') {
+    alpha = 0;
+    oldAlpha = 0;
   }else if(keyCode == 'T') {
     spaceMode = !spaceMode;
+  }else if(keyCode == 'I') {
+    pages.remove(pageI);
   }else if(keyCode == 'R'){
     rotMode = !rotMode;
   }else if(keyCode == 'Q') {

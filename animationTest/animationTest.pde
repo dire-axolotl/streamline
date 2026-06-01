@@ -4,7 +4,7 @@ shapeCon shapes;
 shapeCon ani;
 int timeIndex = 0;
 int frames = 0;
-int[] timeData;
+float[] timeData;
 
 //testing tools remove later
 float alpha = 0;
@@ -20,9 +20,9 @@ void setup(){
   size(1000,1000,P3D);
 
   // box(100,100,0);
-  fileName = "rollerAniWalking.txt";
+  fileName = "atackAniStone.txt";
   //remember timeData should be same one less as pages or it will break
-  timeData = new int[]{1,1};
+  timeData = new float[]{1,1,1,1,1};
 
   ani =  advancedImporter(fileName,timeData);
   
@@ -40,14 +40,14 @@ void draw(){
   // box(10,10,10);
   // newSphere(100,new float[]{200,200,0},255,0,0);
   ani.drawShapes();
-  if(frameRate - frames < 0){
+  if(frameRate/4*timeData[timeIndex] - frames < 0){
     timeIndex++;
     frames = 0;
     if(timeIndex == timeData.length){
       timeIndex = 0;
+      ani.reset();
     }
-    ani.reset();
-    print("reset");
+
   }
   ani.interpolate(timeIndex);
   frames++;
