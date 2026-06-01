@@ -9,7 +9,7 @@ float[] moveMatrix;
 int test = 0;
 shape[] shapes;
 PrintWriter fileWrite;
-String fileName = "dogAniWalking.txt";
+String fileName = "rollerAniAtk.txt";
 boolean spaceMode;
 boolean vertexMode;
 boolean rotMode;
@@ -45,7 +45,7 @@ void setup(){
   pageI = 0;
   pages = new ArrayList<shape[]>();
   shape n = new shape();
-  shapes = n.importer("dogPallet.txt");
+  shapes = n.importer("rollerPallet.txt");
   pages.add(shapes);
   zShift = 0;
   oldZShift = zShift;

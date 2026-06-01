@@ -22,9 +22,9 @@ public class shapeCon{
     for(int pageI= 0; pageI<pages.length-1; pageI++){
       print(pageI + " pageI");
       for(int shapeI=0; shapeI<pages[pageI].length;shapeI++){
-        println("c");
+        // println("c");
         unsetDeltaData[pageI][shapeI] = pages[pageI][shapeI].shapeDelta(pages[pageI+1][shapeI]);
-        println("u did it i guess");
+        // println("u did it i guess");
       }
       // print("here?");
     }
@@ -163,9 +163,9 @@ public shapeCon advancedImporter(String fileName, float[] timeDataP){
       //test pages
       for(int pageII = 0; pageII < pages.length;pageII++){
         for(int shapeII = 0; shapeII < pages[pageII].length;shapeII++){
-          println(pageII + " page");
-          println(shapeII + " shape");
-          println(pages[pageII][shapeII] + " link");
+          // println(pageII + " page");
+          // println(shapeII + " shape");
+          // println(pages[pageII][shapeII] + " link");
         }
       }
 
